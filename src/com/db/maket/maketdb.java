@@ -36,7 +36,7 @@ public class maketdb {
 			for(int i=0;i<page;i++)
 			{
 				json=get.get("IF1501",i);
-				process.process(json);
+				process.process(json,mongo,collect);
 				//process
 			}
 			

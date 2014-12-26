@@ -57,6 +57,12 @@ public class Mongo {
 
 		collect.insert(doc);
 	}
+	
+	public void insert(DBCollection collect, DBObject doc) {
+		// insert object
+
+		collect.insert(doc);
+	}
 
 	public DBCursor find(DBCollection collect) {
 		// find
