@@ -34,8 +34,9 @@ public class processData {
 		
 		//subJson
 		String subJson="";
+
 		
-		for(int i=0;i<nu;i++)
+		for(int i=0;i<List.size();i++)
 		{
 			record=(java.util.List<Object>) List.get(i);
 			for(int j=0;j<ListSize;j++)

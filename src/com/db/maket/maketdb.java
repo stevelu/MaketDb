@@ -21,9 +21,10 @@ public class maketdb {
 		 * fileWriter.close();
 		 */
 
+		String code="IF1502";
 		try {
 			getData get=new getData();
-			String json=get.get("IF1501",1);
+			String json=get.get(code,1);
 			Mongo mongo=new Mongo();
 			DBCollection collect=mongo.get("person");
 			//mongo.insert(collect, json);
@@ -35,8 +36,10 @@ public class maketdb {
 			int page=totalNum/1000+1;
 			for(int i=0;i<page;i++)
 			{
-				json=get.get("IF1501",i);
+				System.out.println("code:"+code+"---page:"+i);
+				json=get.get(code,i);
 				process.process(json,mongo,collect);
+				
 				//process
 			}
 			
