@@ -44,7 +44,7 @@ public class maketdb {
             	
             	if(!colName.contains(name))
         		{//creat collections
-        		mongo.creat(name);
+        		//mongo.creat(name);
         		
         		}
             	

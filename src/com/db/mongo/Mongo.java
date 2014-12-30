@@ -39,8 +39,7 @@ public class Mongo {
 	}
 
 	public void creat(String collectionName) {
-		DBObject options = BasicDBObjectBuilder.start().add("capped", true)
-				.add("size", 123456).get();
+		DBObject options = BasicDBObjectBuilder.start().add("capped", true).get();
 
 		DBCollection collection = db.createCollection(collectionName, options);
 
