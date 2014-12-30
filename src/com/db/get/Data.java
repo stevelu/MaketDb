@@ -40,22 +40,23 @@ public class Data {
 		return str;
 
 	}
-	public List<String> FilterList(String str){
+
+	public List<String> FilterList(String str) {
 		List<String> list = new ArrayList<String>();
-		
+
 		String pattern = "IF\\d\\d\\d\\d";
 
-	      // 创建 Pattern 对象
-	      Pattern r = Pattern.compile(pattern);
+		// 创建 Pattern 对象
+		Pattern r = Pattern.compile(pattern);
 
-	      // 现在创建 matcher 对象
-	      Matcher m = r.matcher(str);
+		// 现在创建 matcher 对象
+		Matcher m = r.matcher(str);
 
-	      while (m.find()){
-	    	   String A=m.group();
-	    	   list.add(A);
-	    	  }
-		
+		while (m.find()) {
+			String A = m.group();
+			list.add(A);
+		}
+
 		return list;
 	}
 
@@ -63,7 +64,7 @@ public class Data {
 
 		int pageNum = page * 1000;
 
-		long datelong =0;
+		long datelong = 0;
 
 		// String apiUrl = "http://119.97.185.7:7615/TQLEX?Entry=HQServ.Tick";
 		// String
@@ -97,7 +98,7 @@ public class Data {
 
 	}
 
-	public Boolean process(String json, Mongo mon, DBCollection coll) {
+	public Boolean process(int page, String json, Mongo mon, DBCollection coll) {
 		DBObject dbObject = (DBObject) JSON.parse(json);
 		Object num = dbObject.get("TotalNum");
 		int nu = Integer.parseInt(num.toString());
@@ -119,7 +120,8 @@ public class Data {
 				doc.append(ListHead.get(j), record.get(j));
 			}
 			mon.insert(coll, doc);
-			System.out.println("insert:" + i);
+			System.out
+					.println(coll.getName() + "/page" + page + "/insert:" + i);
 			doc.clear();
 
 		}
