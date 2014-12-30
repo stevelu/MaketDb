@@ -1,5 +1,7 @@
 package com.db.mongo;
 
+import java.util.Set;
+
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -36,11 +38,11 @@ public class Mongo {
 
 	}
 
-	public void creat() {
+	public void creat(String collectionName) {
 		DBObject options = BasicDBObjectBuilder.start().add("capped", true)
 				.add("size", 123456).get();
 
-		DBCollection collection = db.createCollection("phone1", options);
+		DBCollection collection = db.createCollection(collectionName, options);
 
 	}
 
@@ -80,6 +82,12 @@ public class Mongo {
 		DBObject dbObject = (DBObject) JSON.parse(json);
 		return dbObject;
 
+	}
+
+	public Set<String> getColName() {
+		// TODO Auto-generated method stub
+		Set<String> colName=db.getCollectionNames();
+		return colName;
 	}
 
 }
