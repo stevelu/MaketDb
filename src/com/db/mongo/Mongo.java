@@ -2,6 +2,10 @@ package com.db.mongo;
 
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.db.maket.maketdb;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -11,6 +15,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 
 public class Mongo {
+	private static Logger log = LogManager.getLogger(Mongo.class.getName());
 
 	static DB db = null;
 
@@ -27,9 +32,9 @@ public class Mongo {
 			MongoClient mongoClient = new MongoClient("localhost", 27017);
 			// 连接到数据库
 			db = mongoClient.getDB("test");
-			System.out.println("Connect to database successfully");
+			log.info("Connect to database successfully");
 			boolean auth = db.authenticate("test", psw.toCharArray());
-			System.out.println("Authentication: " + auth);
+			log.info("Authentication: " + auth);
 
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());

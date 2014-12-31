@@ -69,8 +69,9 @@ public class maketdb {
 				DBCollection collect = mongo.get(name);
 				totalNum = data.getTotalNum(json);
 				page = totalNum / 1000 + 1;
+				log.info("code:" + name + "  totalNum:" + totalNum);
 				for (int i = 0; i < page; i++) {
-					System.out.println("code:" + name + "---page:" + i);
+					log.info("code:" + name + "/page:" + i);
 					json = data.getTick(name, i);
 					// TODO step3 and step4
 					//
@@ -79,6 +80,7 @@ public class maketdb {
 
 					// process
 				}
+				log.info("---task end---");
 
 			}
 

@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.db.model.category;
 import com.db.mongo.Mongo;
 import com.mongodb.BasicDBObject;
@@ -14,6 +17,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 public class Data {
+	private static Logger log = LogManager.getLogger(Data.class.getName());
 
 	public String getList() {
 		// String apiUrl = "http://119.97.185.7:7615/TQLEX?Entry=HQServ.Tick";
@@ -120,8 +124,7 @@ public class Data {
 				doc.append(ListHead.get(j), record.get(j));
 			}
 			mon.insert(coll, doc);
-			System.out
-					.println(coll.getName() + "/page" + page + "/insert:" + i);
+			//log.info(coll.getName() + "/page" + page + "/insert:" + i);
 			doc.clear();
 
 		}
