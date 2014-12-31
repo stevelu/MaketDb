@@ -1,8 +1,13 @@
 package com.db.maket;
 
+import java.io.FileInputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.db.get.Data;
 import com.db.mongo.Mongo;
@@ -13,6 +18,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 
 public class maketdb {
+	private static Logger log = LogManager.getLogger(maketdb.class.getName());
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -23,11 +29,25 @@ public class maketdb {
 		// step3:getDate
 		// step4:is exist? break
 		// step5: process
+		
+		
+		//config
+		//for linux 
+		//String path = System.getProperty("user.dir") +"/init.properties";
+		String path = System.getProperty("user.dir") +"\\init.properties";
+		
 
+		
+		log.info("---task sart---");
 		Mongo mongo = new Mongo();
 
 		String code = "IF1502";
 		try {
+			log.info("get config file");
+			Properties p = new Properties();
+			p.load(new FileInputStream(path));
+			log.info("config file isEmpty"+p.isEmpty()+p.getProperty("test"));
+			
 			Data data = new Data();
 			String listStr = data.getList();
 			List<String> CodeName = data.FilterList(listStr);
