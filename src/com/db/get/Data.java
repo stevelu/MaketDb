@@ -90,6 +90,32 @@ public class Data {
 		return str;
 
 	}
+	
+	public String getDay(String AttCode) {
+		//get data for day line
+		int pageNum = 0;
+
+		long Period = 4;
+
+		// String apiUrl = "http://119.97.185.7:7615/TQLEX?Entry=HQServ.Tick";
+		// String
+		// para="{"Code":"IF1501","Setcode":47,"Period":4,"Startxh":0,"WantNum":240,"TQFlag":0,"HasAttachInfo":0,"ExHQFlag":1,"CharSet":""}";
+		String apiUrl = "http://119.97.185.12:7615/TQLEX?Entry=HQServ.FXT";
+		// String
+		// para="{\"Code\":\"IF1412\",\"Setcode\":47,\"Date\":0,\"Startxh\":0,\"WantNum\":1000,\"HasAttachInfo\":1,\"ExHQFlag\":1,\"CharSet\":\"\"}";
+		String para = "{\"Code\":\""
+				+ AttCode
+				// + "\",\"Setcode\":47,\"Date\":0,\"Startxh\":"
+				+ "\",\"Setcode\":47,\"Period\":"
+				+ Period
+				+ ",\"Startxh\":"
+				+ pageNum
+				+ ",\"WantNum\":240,\"TQFlag\":0,\"HasAttachInfo\":0,\"ExHQFlag\":1,\"CharSet\":\"\"}";
+
+		URLConnectionHelper helper = new URLConnectionHelper();
+		String str = helper.sendPost(apiUrl, para);
+		return str;
+	}
 
 	public int getTotalNum(String json) {
 		// TODO Auto-generated constructor stub
@@ -131,5 +157,17 @@ public class Data {
 
 		return true;
 
+	}
+
+	public boolean isExist(String AttCode) {
+		// TODO the code name is in the day line ?
+		String dayJson=this.getDay(AttCode);
+		DBObject dbObject = (DBObject) JSON.parse(dayJson);
+		List<String> ListHead = (List<String>) dbObject.get("ListHead");
+		int ListSize = ListHead.size();
+		List<Object> List = (List<Object>) dbObject.get("List");
+		List.get(ListSize);
+		//TODO  the last date is same with today?
+		return false;
 	}
 }

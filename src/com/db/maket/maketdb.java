@@ -59,28 +59,33 @@ public class maketdb {
 			Set<String> colName = mongo.getColName();
 			Iterator<String> iter = CodeName.iterator();
 			for (String name : CodeName) {
-
-				if (!colName.contains(name)) {// creat collections
-												// mongo.creat(name);
-
+				if(data.isExist(name))
+				{//TODO is there data for date
+					
+					if (!colName.contains(name)) {// creat collections
+													// mongo.creat(name);
+	
+					}
+	
+					json = data.getTick(name, 0);
+					DBCollection collect = mongo.get(name);
+					totalNum = data.getTotalNum(json);
+					page = totalNum / 1000 + 1;
+					log.info("code:" + name + "  totalNum:" + totalNum);
+					for (int i = 0; i < page; i++) {
+						log.info("code:" + name + "/page:" + i);
+						json = data.getTick(name, i);
+						// TODO step3 and step4
+						//
+						//
+						data.process(i, json, mongo, collect);
+	
+						// process
+					}
+					log.info("---task end---");
 				}
-
-				json = data.getTick(name, 0);
-				DBCollection collect = mongo.get(name);
-				totalNum = data.getTotalNum(json);
-				page = totalNum / 1000 + 1;
-				log.info("code:" + name + "  totalNum:" + totalNum);
-				for (int i = 0; i < page; i++) {
-					log.info("code:" + name + "/page:" + i);
-					json = data.getTick(name, i);
-					// TODO step3 and step4
-					//
-					//
-					data.process(i, json, mongo, collect);
-
-					// process
-				}
-				log.info("---task end---");
+				
+			    
 
 			}
 
@@ -104,5 +109,4 @@ public class maketdb {
 		}
 
 	}
-
 }
