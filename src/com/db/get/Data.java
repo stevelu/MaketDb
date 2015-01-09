@@ -1,5 +1,6 @@
 package com.db.get;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.db.model.category;
 import com.db.mongo.Mongo;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -161,13 +163,20 @@ public class Data {
 
 	public boolean isExist(String AttCode) {
 		// TODO the code name is in the day line ?
+		boolean result=false;
 		String dayJson=this.getDay(AttCode);
 		DBObject dbObject = (DBObject) JSON.parse(dayJson);
 		List<String> ListHead = (List<String>) dbObject.get("ListHead");
-		int ListSize = ListHead.size();
 		List<Object> List = (List<Object>) dbObject.get("List");
-		List.get(ListSize);
+		BasicDBList theLast=(BasicDBList)List.get(List.size()-1);
+		String theLastDate=(String)theLast.get(0).toString();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		String today=formatter.format(new Date());
+		if(theLastDate.equals(today))result=true;
+
+
 		//TODO  the last date is same with today?
-		return false;
+		return result;
 	}
 }
