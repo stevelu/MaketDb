@@ -21,19 +21,27 @@ public class Mongo {
 
 	public Mongo() {
 		// TODO Auto-generated constructor stub
-		db = connect();
+		String host ="localhost";
+		String dbname ="tset";
+		String username ="tset";
+		String password ="test";
+		db = connect(host,dbname,username,password);
+	}
+	public Mongo(String host,String dbname,String username,String password) {
+		// TODO Auto-generated constructor stub
+		db = connect(host,dbname,username,password);
 	}
 
-	public DB connect() {
+	public DB connect(String host,String dbname,String username,String password) {
 		DB db = null;
 		try {
 			// 连接到 mongodb 服务
-			String psw = "test";
-			MongoClient mongoClient = new MongoClient("localhost", 27017);
+			String psw = password;
+			MongoClient mongoClient = new MongoClient(host, 27017);
 			// 连接到数据库
-			db = mongoClient.getDB("test");
+			db = mongoClient.getDB(dbname);
 			log.info("Connect to database successfully");
-			boolean auth = db.authenticate("test", psw.toCharArray());
+			boolean auth = db.authenticate(username, psw.toCharArray());
 			log.info("Authentication: " + auth);
 
 		} catch (Exception e) {
