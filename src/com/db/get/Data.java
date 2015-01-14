@@ -21,8 +21,14 @@ import com.mongodb.util.JSON;
 public class Data {
 	private static Logger log = LogManager.getLogger(Data.class.getName());
 
+	public List<String> getCodeNameList() {
+		return FilterList(this.getList());
+	}
+
+	/**
+	 * @return json for code name list
+	 */
 	public String getList() {
-		
 		String apiUrl = "http://119.97.185.12:7615/TQLEX?Entry=HQServ.MultiHQ";
 		String para = "{\"WantCol\":[\"NOW\",\"VOL\",\"VolInStock\",\"PreVolInStock\",\"ClearPrice\",\"LB\",\"OPEN\",\"MAX\",\"MIN\",\"CLOSE\",\"XSFLAG\"],\"SetDomain\":47,\"SubCode\":\"\",\"ColType\":14,\"Startxh\":0,\"WantNum\":20,\"SortType\":0,\"ExHQFlag\":1,\"CharSet\":\"\"}";
 		URLConnectionHelper helper = new URLConnectionHelper();
@@ -31,9 +37,14 @@ public class Data {
 
 	}
 
+	/**
+	 * filter code name like IF1501 
+	 * @param str
+	 * @return list of code name 
+	 */
 	public List<String> FilterList(String str) {
 		List<String> list = new ArrayList<String>();
-		//正值表达式查找IF1502
+		// 正值表达式查找IF1502
 		String pattern = "IF\\d\\d\\d\\d";
 		// 创建 Pattern 对象
 		Pattern r = Pattern.compile(pattern);
@@ -54,9 +65,10 @@ public class Data {
 		long datelong = 0;
 
 		// String apiUrl = "http://119.97.185.7:7615/TQLEX?Entry=HQServ.Tick";
-		// String  para="{\"Code\":\"IF1409\",\"Setcode\":47,\"Date\":0704,\"Startxh\":-1,\"WantNum\":10,\"HasAttachInfo\":1,\"ExHQFlag\":1,\"CharSet\":\"\"}";
+		// String
+		// para="{\"Code\":\"IF1409\",\"Setcode\":47,\"Date\":0704,\"Startxh\":-1,\"WantNum\":10,\"HasAttachInfo\":1,\"ExHQFlag\":1,\"CharSet\":\"\"}";
 		String apiUrl = "http://119.97.185.12:7615/TQLEX?Entry=HQServ.Tick";
-    	String para = "{\"Code\":\""
+		String para = "{\"Code\":\""
 				+ AttCode
 				+ "\",\"Setcode\":47,\"Date\":"
 				+ datelong
@@ -75,7 +87,8 @@ public class Data {
 		int pageNum = 0;
 		long Period = 4;
 		// String apiUrl = "http://119.97.185.7:7615/TQLEX?Entry=HQServ.Tick";
-		// String para="{"Code":"IF1501","Setcode":47,"Period":4,"Startxh":0,"WantNum":240,"TQFlag":0,"HasAttachInfo":0,"ExHQFlag":1,"CharSet":""}";
+		// String
+		// para="{"Code":"IF1501","Setcode":47,"Period":4,"Startxh":0,"WantNum":240,"TQFlag":0,"HasAttachInfo":0,"ExHQFlag":1,"CharSet":""}";
 		String apiUrl = "http://119.97.185.12:7615/TQLEX?Entry=HQServ.FXT";
 		String para = "{\"Code\":\""
 				+ AttCode
@@ -90,8 +103,9 @@ public class Data {
 		return str;
 	}
 
-	public int getTotalNum(String json) {
+	public int getTotalNum(String AttCode) {
 
+		String json=this.getTick(AttCode, 0);
 		DBObject dbObject = (DBObject) JSON.parse(json);
 		Object num = dbObject.get("TotalNum");
 		int nu = Integer.parseInt(num.toString());
@@ -101,7 +115,7 @@ public class Data {
 	}
 
 	public Boolean process(int page, String json, Mongo mon, DBCollection coll) {
-		
+
 		DBObject dbObject = (DBObject) JSON.parse(json);
 		Object num = dbObject.get("TotalNum");
 		int nu = Integer.parseInt(num.toString());
@@ -132,7 +146,7 @@ public class Data {
 	}
 
 	public boolean isExist(String AttCode) {
-		//  the code name is in the day line ?
+		// the code name is in the day line ?
 		boolean result = false;
 		String dayJson = this.getDay(AttCode);
 		DBObject dbObject = (DBObject) JSON.parse(dayJson);
@@ -148,7 +162,7 @@ public class Data {
 		log.info("today:" + today + "  theLastDate:" + theLastDate
 				+ "  result:" + result);
 
-		//  the last date is same with today?
+		// the last date is same with today?
 		return result;
 	}
 }
