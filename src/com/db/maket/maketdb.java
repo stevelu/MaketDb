@@ -1,22 +1,12 @@
 package com.db.maket;
 
-import java.io.FileInputStream;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.db.get.Data;
 import com.db.mongo.Mongo;
 import com.db.tools.Config;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.MongoClient;
+
 
 /**
  * main: run every weekday afternoon 15:40
@@ -41,9 +31,9 @@ public class maketdb {
 		log.info("---task sart---");
 		try {
 			Mongo mongo = new Mongo(host, dbname, username, password);
-			Data data = new Data();
+			Process data = new Process();
 			List<String> CodeName = data.getCodeNameList();
-			Iterator<String> iter = CodeName.iterator();
+			CodeName.iterator();
 			for (String name : CodeName) 
 			{
 				if (data.isExist(name))// is exist data in today

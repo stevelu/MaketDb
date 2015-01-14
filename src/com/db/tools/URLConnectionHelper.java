@@ -1,13 +1,11 @@
-package com.db.get;
+package com.db.tools;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +28,7 @@ public class URLConnectionHelper {
 		//url="http://www.baidu.com/";
 		BufferedReader in = null;
 		try {
-			byte[] b=params.getBytes("UTF-8");
+			//byte[] b=params.getBytes("UTF-8");
 			params=new String(params.getBytes("UTF-8"),"UTF-8");
 			String urlName = url + "?" + params;
 			
@@ -76,7 +74,7 @@ public class URLConnectionHelper {
 		//url="http://www.baidu.com/";
 		BufferedReader in = null;
 		try {
-			byte[] b=params.getBytes("UTF-8");
+			//byte[] b=params.getBytes("UTF-8");
 			params=new String(params.getBytes("UTF-8"),"UTF-8");
 			String urlName = url + "?" + params;
 			
